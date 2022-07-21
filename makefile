@@ -7,10 +7,10 @@ SRCFOLDER := src/
 # .o
 OBJFOLDER := obj/
 CC := g++
-CFLAGS := -W -Wall -ansi -std=c++11 -pedantic
+CFLAGS := -W -Wall -ansi -std=c++11 -pedantic -pthread
 SRCFILES := $(wildcard src/*.cpp)
 all: $(SRCFILES:src/%.cpp=obj/%.o)
-	$(CC) $(CFLAGS) -pthread obj/*.o -o bin/prog
+	$(CC) $(CFLAGS) obj/*.o -o bin/prog
 obj/%.o: src/%.cpp
 	$(CC) $(CFLAGS) -c $< -o $@ -I./inc
 run: bin/prog
