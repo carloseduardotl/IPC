@@ -9,70 +9,79 @@
 #include <thread>
 #include <vector>
 
-/*enum state
-{
-    male,
-    female,
-    empty
-};
-
-typedef struct bathroom
-{
-    Function_pool male_queue;
-    Function_pool female_queue;
-    std::vector<std::thread> thread_pool;
-    state current;
-} bathroom;
-
-void clear_bathroom(bathroom * room)
-{
-    room->male_queue.done();
-    for (unsigned int i = 0; i < room->thread_pool.size(); i++)
-    {
-        room->thread_pool.at(i).join();
-    }
-    room->thread_pool.clear();
-}
-
-void spawn(bathroom * room, std::function<void()> func)
-{
-    srand(time(0));
-    volatile int male, female;
-    male = rand()%20;
-    female = rand()%20;
-
-    for(int i=0; i< male; i++) room->male_queue.push(func);
-    for(int i=0; i< female; i++) room->female_queue.push(func);
-
-    std::cout << "Spawned " << male << " men and " << female << " women" << std::endl;
-}*/
 
 void workload()
 {
     int random = rand()%10;
-    std::cout << "A person will use the bathroom for " << random << " seconds" << std::endl;
+    //std::cout << "A person will use the bathroom for " << random << " seconds" << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(random));
-    std::cout << "A person exited the bathroom" << std::endl;
+    //std::cout << "A person exited the bathroom" << std::endl;
 }
 
+/*void spawn_persons(std::function<void() > spawn, std::function<void()> workload)
+{
+    std::this_thread::sleep_for(std::chrono::seconds(30));
+    //spawn(workload);
+}*/
 
 int main()
 {
-    //bathroom room;
     std::cout << "stating operation" << std::endl;
-    int num_threads = 5;
+    unsigned int num_threads = 5;
     std::cout << "number of threads = " << num_threads << std::endl;
-    /*spawn(&room, workload);
-    for (int i = 0; i < num_threads; i++)
-    {
-        room.thread_pool.push_back(std::thread(&Function_pool::infinite_loop_func, &room.male_queue));
-    }
-    clear_bathroom(&room);*/
 
-    Bathroom bathroom(num_threads);
-
+    Bathroom bathroom(num_threads);    
     bathroom.spawn(workload);
     bathroom.start_bathroom();
+    //std::thread gen (spawn_persons, bathroom.spawn, workload);
+
+    while (true)
+    {
+        switch (bathroom.get_current_state())
+        {
+        case female:
+            if( (bathroom.get_male_queue_size() > num_threads) && (bathroom.get_male_queue_size() > bathroom.get_female_queue_size()) )
+            {
+                std::cout << "switching state female to male" << std::endl;
+                std::cout << bathroom.get_male_queue_size() << " men in queue" << std::endl;
+                std::cout << bathroom.get_female_queue_size() << " women in queue" << std::endl;
+                bathroom.set_current_state(male);
+            }
+            if( (bathroom.get_male_queue_size() != 0) && (bathroom.get_female_queue_size() == 0) )
+            {
+
+                std::cout << "switching state female to male" << std::endl;
+                std::cout << bathroom.get_male_queue_size() << " men in queue" << std::endl;
+                std::cout << bathroom.get_female_queue_size() << " women in queue" << std::endl;
+                bathroom.set_current_state(male);
+            }
+            break;
+
+        case male:
+            if( (bathroom.get_female_queue_size() > num_threads) && (bathroom.get_female_queue_size() > bathroom.get_male_queue_size()) )
+            {
+
+                std::cout << "switching state male to female" << std::endl;
+                std::cout << bathroom.get_male_queue_size() << " men in queue" << std::endl;
+                std::cout << bathroom.get_female_queue_size() << " women in queue" << std::endl;
+                bathroom.set_current_state(female);
+            }
+            if( (bathroom.get_female_queue_size() != 0) && (bathroom.get_male_queue_size() == 0) )
+            {
+
+                std::cout << "switching state male to female" << std::endl;
+                std::cout << bathroom.get_male_queue_size() << " men in queue" << std::endl;
+                std::cout << bathroom.get_female_queue_size() << " women in queue" << std::endl;
+                bathroom.set_current_state(female);
+            }
+            break;
+        default:
+            break;
+        }
+    }
+    
+
     bathroom.clear_bathroom();
 
+    return 0;
 }

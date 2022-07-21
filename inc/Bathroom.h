@@ -8,7 +8,7 @@ enum state
 {
     male,
     female,
-    empty
+    initial
 };
 
 class Bathroom
@@ -17,7 +17,7 @@ class Bathroom
     Function_pool male_queue;
     Function_pool female_queue;
     std::vector<std::thread> thread_pool;
-    state current;
+    state current_state;
     uint64_t num_threads;
 
     public:
@@ -27,5 +27,9 @@ class Bathroom
     void start_bathroom();
     void spawn(std::function<void()> func);
 
-    //state get_state();
+    uint64_t get_male_queue_size();
+    uint64_t get_female_queue_size();
+
+    void set_current_state(state future_state);
+    state get_current_state();
 };

@@ -2,13 +2,13 @@
 
 Bathroom::Bathroom(uint64_t threads)
 {
-    current = empty;
+    current_state = initial;
     num_threads = threads;
 }
 
 void Bathroom::clear_bathroom()
 {
-    switch (current)
+    switch (current_state)
     {
     case male:
         male_queue.done();
@@ -35,12 +35,12 @@ void Bathroom::start_bathroom()
     if(male_size > female_size){
         std::cout << "Male time" << std::endl;
         for (i = 0; i < num_threads; i++) thread_pool.push_back(std::thread(&Function_pool::infinite_loop_func, &male_queue));
-        current = male;
+        current_state = male;
     }
     else{
         std::cout << "Female time" << std::endl;
         for (i = 0; i < num_threads; i++) thread_pool.push_back(std::thread(&Function_pool::infinite_loop_func, &female_queue));
-        current = female;
+        current_state = female;
     }
 }
 
@@ -55,4 +55,23 @@ void Bathroom::spawn(std::function<void()> func)
     for(int i=0; i< female; i++) female_queue.push(func);
 
     std::cout << "Spawned " << male << " men and " << female << " women" << std::endl;
+}
+
+uint64_t Bathroom::get_male_queue_size(){
+    return male_queue.get_queue_size();
+}
+
+uint64_t Bathroom::get_female_queue_size(){
+    return female_queue.get_queue_size();
+}
+
+void Bathroom::set_current_state(state future_state){
+    if(future_state == current_state) return;
+    this->clear_bathroom();
+    current_state = future_state;
+    this->start_bathroom();
+}
+
+state Bathroom::get_current_state(){
+    return current_state;
 }
