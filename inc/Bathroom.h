@@ -2,7 +2,7 @@
 #include "Function_pool.h"
 #include <thread>
 #include <functional>
-#include <iostream>
+#include <stdint.h>
 
 enum state
 {

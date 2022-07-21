@@ -33,12 +33,12 @@ void Bathroom::start_bathroom()
     uint64_t i;
 
     if(male_size > female_size){
-        std::cout << "Male time" << std::endl;
+        printf("Male time\n");
         for (i = 0; i < num_threads; i++) thread_pool.push_back(std::thread(&Function_pool::infinite_loop_func, &male_queue));
         current_state = male;
     }
     else{
-        std::cout << "Female time" << std::endl;
+        printf("Female time\n");
         for (i = 0; i < num_threads; i++) thread_pool.push_back(std::thread(&Function_pool::infinite_loop_func, &female_queue));
         current_state = female;
     }
@@ -54,7 +54,7 @@ void Bathroom::spawn(std::function<void()> func)
     for(int i=0; i< male; i++) male_queue.push(func);
     for(int i=0; i< female; i++) female_queue.push(func);
 
-    std::cout << "Spawned " << male << " men and " << female << " women" << std::endl;
+    printf("Spawned %d men and %d women\n", male, female);
 }
 
 uint64_t Bathroom::get_male_queue_size(){

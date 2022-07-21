@@ -1,5 +1,9 @@
 #include "Function_pool.h"
 #include "Bathroom.h"
+
+#include <stdio.h>
+#include <inttypes.h>
+
 #include <cstdlib>
 #include <functional>
 #include <string>
@@ -13,9 +17,9 @@
 void workload()
 {
     int random = rand()%10;
-    //std::cout << "A person will use the bathroom for " << random << " seconds" << std::endl;
+    printf("A person will use the bathroom for %d seconds\n", random);
     std::this_thread::sleep_for(std::chrono::seconds(random));
-    //std::cout << "A person exited the bathroom" << std::endl;
+    printf("A person exited the bathroom\n");
 }
 
 /*void spawn_persons(std::function<void() > spawn, std::function<void()> workload)
@@ -42,17 +46,17 @@ int main()
         case female:
             if( (bathroom.get_male_queue_size() > num_threads) && (bathroom.get_male_queue_size() > bathroom.get_female_queue_size()) )
             {
-                std::cout << "switching state female to male" << std::endl;
-                std::cout << bathroom.get_male_queue_size() << " men in queue" << std::endl;
-                std::cout << bathroom.get_female_queue_size() << " women in queue" << std::endl;
+                printf("switching state female to male\n");
+                printf("%" PRIu64 " men in queue\n",bathroom.get_male_queue_size());
+                printf("%" PRIu64 " women in queue\n", bathroom.get_female_queue_size());
                 bathroom.set_current_state(male);
             }
             if( (bathroom.get_male_queue_size() != 0) && (bathroom.get_female_queue_size() == 0) )
             {
 
-                std::cout << "switching state female to male" << std::endl;
-                std::cout << bathroom.get_male_queue_size() << " men in queue" << std::endl;
-                std::cout << bathroom.get_female_queue_size() << " women in queue" << std::endl;
+                printf("switching state female to male\n");
+                printf("%" PRIu64 " men in queue\n",bathroom.get_male_queue_size());
+                printf("%" PRIu64 " women in queue\n", bathroom.get_female_queue_size());
                 bathroom.set_current_state(male);
             }
             break;
@@ -61,17 +65,17 @@ int main()
             if( (bathroom.get_female_queue_size() > num_threads) && (bathroom.get_female_queue_size() > bathroom.get_male_queue_size()) )
             {
 
-                std::cout << "switching state male to female" << std::endl;
-                std::cout << bathroom.get_male_queue_size() << " men in queue" << std::endl;
-                std::cout << bathroom.get_female_queue_size() << " women in queue" << std::endl;
+                printf("switching state male to female\n");
+                printf("%" PRIu64 " men in queue\n",bathroom.get_male_queue_size());
+                printf("%" PRIu64 " women in queue\n", bathroom.get_female_queue_size());
                 bathroom.set_current_state(female);
             }
             if( (bathroom.get_female_queue_size() != 0) && (bathroom.get_male_queue_size() == 0) )
             {
 
-                std::cout << "switching state male to female" << std::endl;
-                std::cout << bathroom.get_male_queue_size() << " men in queue" << std::endl;
-                std::cout << bathroom.get_female_queue_size() << " women in queue" << std::endl;
+                printf("switching state male to female\n");
+                printf("%" PRIu64 " men in queue\n",bathroom.get_male_queue_size());
+                printf("%" PRIu64 " women in queue\n", bathroom.get_female_queue_size());
                 bathroom.set_current_state(female);
             }
             break;
