@@ -1,3 +1,4 @@
+#pragma once
 #include "Function_pool.h"
 #include <thread>
 #include <functional>
