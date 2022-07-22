@@ -13,6 +13,7 @@
 #include <thread>
 #include <vector>
 
+Bathroom bathroom;   
 
 void workload()
 {
@@ -22,22 +23,27 @@ void workload()
     printf("A person exited the bathroom\n");
 }
 
-/*void spawn_persons(std::function<void() > spawn, std::function<void()> workload)
+void spawn_persons()
 {
-    std::this_thread::sleep_for(std::chrono::seconds(30));
-    //spawn(workload);
-}*/
+    while (true)
+    {    
+        std::this_thread::sleep_for(std::chrono::seconds(30));
+        bathroom.spawn(workload);
+    }
+}
 
 int main()
 {
     std::cout << "stating operation" << std::endl;
-    unsigned int num_threads = 5;
+    std::cout << "Number of threads: ";
+    unsigned int num_threads;
+    std::cin >> num_threads;
     std::cout << "number of threads = " << num_threads << std::endl;
-
-    Bathroom bathroom(num_threads);    
+    bathroom.set_num_thread(num_threads);
+ 
     bathroom.spawn(workload);
     bathroom.start_bathroom();
-    //std::thread gen (spawn_persons, bathroom.spawn, workload);
+    std::thread gen (spawn_persons);
 
     while (true)
     {
