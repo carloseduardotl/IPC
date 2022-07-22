@@ -25,7 +25,7 @@ class Bathroom
 
     void clear_bathroom();
     void start_bathroom();
-    void spawn(std::function<void()> func);
+    void spawn(std::function<void()> men, std::function<void()> women);
 
     uint64_t get_male_queue_size();
     uint64_t get_female_queue_size();

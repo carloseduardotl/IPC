@@ -15,20 +15,28 @@
 
 Bathroom bathroom;   
 
-void workload()
+void workload_men()
 {
     int random = rand()%10;
-    printf("A person will use the bathroom for %d seconds\n", random);
+    printf("A men will use the bathroom for %d seconds\n", random);
     std::this_thread::sleep_for(std::chrono::seconds(random));
-    printf("A person exited the bathroom\n");
+    printf("A men exited the bathroom\n");
+}
+
+void workload_women()
+{
+    int random = rand()%10;
+    printf("A women will use the bathroom for %d seconds\n", random);
+    std::this_thread::sleep_for(std::chrono::seconds(random));
+    printf("A women exited the bathroom\n");
 }
 
 void spawn_persons()
 {
     while (true)
     {    
+        bathroom.spawn(workload_men, workload_women);
         std::this_thread::sleep_for(std::chrono::seconds(30));
-        bathroom.spawn(workload);
     }
 }
 
@@ -40,10 +48,10 @@ int main()
     std::cin >> num_threads;
     std::cout << "number of threads = " << num_threads << std::endl;
     bathroom.set_num_thread(num_threads);
- 
-    bathroom.spawn(workload);
-    bathroom.start_bathroom();
+
     std::thread gen (spawn_persons);
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    bathroom.start_bathroom();
 
     while (true)
     {

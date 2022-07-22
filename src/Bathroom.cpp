@@ -48,7 +48,7 @@ void Bathroom::start_bathroom()
     }
 }
 
-void Bathroom::spawn(std::function<void()> func)
+void Bathroom::spawn(std::function<void()> men, std::function<void()> women)
 {
     srand(time(0));
     volatile int male, female;
@@ -59,8 +59,8 @@ void Bathroom::spawn(std::function<void()> func)
     printf("\tSpawned %d men and %d women\n", male, female);
     printf("#####################################\n");
 
-    for(int i=0; i< male; i++) male_queue.push(func);
-    for(int i=0; i< female; i++) female_queue.push(func);
+    for(int i=0; i< male; i++) male_queue.push(men);
+    for(int i=0; i< female; i++) female_queue.push(women);
 }
 
 uint64_t Bathroom::get_male_queue_size(){
