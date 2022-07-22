@@ -47,11 +47,13 @@ int main()
 
     while (true)
     {
-        std::this_thread::sleep_for(std::chrono::(1));
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        uint64_t male_queue_size = bathroom.get_male_queue_size();
+        uint64_t female_queue_size = bathroom.get_female_queue_size();
         switch (bathroom.get_current_state())
         {
         case female:
-            if( (bathroom.get_male_queue_size() > num_threads) && (bathroom.get_male_queue_size() > bathroom.get_female_queue_size()) )
+            if( (male_queue_size > num_threads) && (male_queue_size > female_queue_size) )
             {
                 printf("#####################################\n");
                 printf("\tSwitching state female to male\n");
@@ -60,7 +62,7 @@ int main()
                 printf("#####################################\n");
                 bathroom.set_current_state(male);
             }
-            if( (bathroom.get_male_queue_size() != 0) && (bathroom.get_female_queue_size() == 0) )
+            if( (male_queue_size!= 0) && (female_queue_size == 0) )
             {
                 printf("#####################################\n");
                 printf("\tSwitching state female to male\n");
@@ -72,7 +74,7 @@ int main()
             break;
 
         case male:
-            if( (bathroom.get_female_queue_size() > num_threads) && (bathroom.get_female_queue_size() > bathroom.get_male_queue_size()) )
+            if( (female_queue_size > num_threads) && (female_queue_size > male_queue_size) )
             {
                 printf("#####################################\n");
                 printf("\tSwitching state male to female\n");
@@ -81,7 +83,7 @@ int main()
                 printf("#####################################\n");
                 bathroom.set_current_state(female);
             }
-            if( (bathroom.get_female_queue_size() != 0) && (bathroom.get_male_queue_size() == 0) )
+            if( (female_queue_size != 0) && (male_queue_size == 0) )
             {
                 printf("#####################################\n");
                 printf("\tSwitching state male to female\n");
