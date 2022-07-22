@@ -1,9 +1,9 @@
 #include "Bathroom.h"
 
-Bathroom::Bathroom(uint64_t threads)
+Bathroom::Bathroom()
 {
     current_state = initial;
-    num_threads = threads;
+    num_threads = std::thread::hardware_concurrency();
 }
 
 void Bathroom::clear_bathroom()
@@ -90,4 +90,9 @@ void Bathroom::set_current_state(state future_state){
 
 state Bathroom::get_current_state(){
     return current_state;
+}
+
+void Bathroom::set_num_thread(uint64_t max)
+{
+    this->num_threads = max;
 }

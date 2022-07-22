@@ -21,7 +21,7 @@ class Bathroom
     uint64_t num_threads;
 
     public:
-    Bathroom(uint64_t threads);
+    Bathroom();
 
     void clear_bathroom();
     void start_bathroom();
@@ -32,4 +32,6 @@ class Bathroom
 
     void set_current_state(state future_state);
     state get_current_state();
+
+    void set_num_thread(uint64_t threads);
 };
