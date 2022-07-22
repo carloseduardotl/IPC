@@ -47,6 +47,7 @@ int main()
 
     while (true)
     {
+        std::this_thread::sleep_for(std::chrono::(1));
         switch (bathroom.get_current_state())
         {
         case female:

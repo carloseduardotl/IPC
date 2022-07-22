@@ -55,11 +55,12 @@ void Bathroom::spawn(std::function<void()> func)
     male = rand()%20;
     female = rand()%20;
 
-    for(int i=0; i< male; i++) male_queue.push(func);
-    for(int i=0; i< female; i++) female_queue.push(func);
     printf("#####################################\n");
     printf("\tSpawned %d men and %d women\n", male, female);
     printf("#####################################\n");
+
+    for(int i=0; i< male; i++) male_queue.push(func);
+    for(int i=0; i< female; i++) female_queue.push(func);
 }
 
 uint64_t Bathroom::get_male_queue_size(){
