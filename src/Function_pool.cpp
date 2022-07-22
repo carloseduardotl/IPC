@@ -35,7 +35,7 @@ void Function_pool::infinite_loop_func()
         {
             std::unique_lock<std::mutex> lock(m_lock);
             m_data_condition.wait(lock, [this]() {return !m_function_queue.empty() || !m_accept_functions; });
-            if (!m_accept_functions && m_function_queue.empty())
+            if (!m_accept_functions /*&& m_function_queue.empty()*/)
             {
                 //lock will be release automatically.
                 //finish the thread loop and let it join in the main thread.

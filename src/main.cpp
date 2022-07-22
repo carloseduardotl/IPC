@@ -46,17 +46,20 @@ int main()
         case female:
             if( (bathroom.get_male_queue_size() > num_threads) && (bathroom.get_male_queue_size() > bathroom.get_female_queue_size()) )
             {
-                printf("switching state female to male\n");
-                printf("%" PRIu64 " men in queue\n",bathroom.get_male_queue_size());
-                printf("%" PRIu64 " women in queue\n", bathroom.get_female_queue_size());
+                printf("#####################################\n");
+                printf("\tSwitching state female to male\n");
+                printf("\t%" PRIu64 " men in queue\n",bathroom.get_male_queue_size());
+                printf("\t%" PRIu64 " women in queue\n", bathroom.get_female_queue_size());
+                printf("#####################################\n");
                 bathroom.set_current_state(male);
             }
             if( (bathroom.get_male_queue_size() != 0) && (bathroom.get_female_queue_size() == 0) )
             {
-
-                printf("switching state female to male\n");
-                printf("%" PRIu64 " men in queue\n",bathroom.get_male_queue_size());
-                printf("%" PRIu64 " women in queue\n", bathroom.get_female_queue_size());
+                printf("#####################################\n");
+                printf("\tSwitching state female to male\n");
+                printf("\t%" PRIu64 " men in queue\n",bathroom.get_male_queue_size());
+                printf("\t%" PRIu64 " women in queue\n", bathroom.get_female_queue_size());
+                printf("#####################################\n");
                 bathroom.set_current_state(male);
             }
             break;
@@ -64,18 +67,20 @@ int main()
         case male:
             if( (bathroom.get_female_queue_size() > num_threads) && (bathroom.get_female_queue_size() > bathroom.get_male_queue_size()) )
             {
-
-                printf("switching state male to female\n");
-                printf("%" PRIu64 " men in queue\n",bathroom.get_male_queue_size());
-                printf("%" PRIu64 " women in queue\n", bathroom.get_female_queue_size());
+                printf("#####################################\n");
+                printf("\tSwitching state male to female\n");
+                printf("\t%" PRIu64 " men in queue\n",bathroom.get_male_queue_size());
+                printf("\t%" PRIu64 " women in queue\n", bathroom.get_female_queue_size());
+                printf("#####################################\n");
                 bathroom.set_current_state(female);
             }
             if( (bathroom.get_female_queue_size() != 0) && (bathroom.get_male_queue_size() == 0) )
             {
-
-                printf("switching state male to female\n");
-                printf("%" PRIu64 " men in queue\n",bathroom.get_male_queue_size());
-                printf("%" PRIu64 " women in queue\n", bathroom.get_female_queue_size());
+                printf("#####################################\n");
+                printf("\tSwitching state male to female\n");
+                printf("\t%" PRIu64 " men in queue\n",bathroom.get_male_queue_size());
+                printf("\t%" PRIu64 " women in queue\n", bathroom.get_female_queue_size());
+                printf("#####################################\n");
                 bathroom.set_current_state(female);
             }
             break;
